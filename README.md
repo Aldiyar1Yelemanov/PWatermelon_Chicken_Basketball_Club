@@ -38,6 +38,10 @@ state/localStorage, not the URL — straightforward to add later with
 
 ### 1. Run it
 
+On Windows, double-click `start.bat`. It automatically checks Node.js,
+installs dependencies on the first run, starts the Vite server, and opens the
+app in a browser. Do not open `index.html` directly.
+
 ```bash
 npm install
 npm run dev
