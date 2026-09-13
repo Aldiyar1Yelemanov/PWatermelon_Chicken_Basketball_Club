@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../contexts/AuthContext'
 import { getAddresses, saveAddress } from '../lib/api'
 import EmptyState from '../components/ui/EmptyState'
+import MapPicker from '../components/address/MapPicker'
 
 export default function Addresses() {
   const { t } = useTranslation()
@@ -12,6 +13,7 @@ export default function Addresses() {
   const [adding, setAdding] = useState(false)
   const [street, setStreet] = useState('')
   const [house, setHouse] = useState('')
+  const [coordinates, setCoordinates] = useState<[number, number] | null>(null)
 
   useEffect(() => {
     if (!user) {
@@ -30,10 +32,17 @@ export default function Addresses() {
 
   const handleAdd = async () => {
     if (!street.trim() || !house.trim()) return
-    const { data } = await saveAddress(user.id, { street: street.trim(), house: house.trim(), city: 'Актобе' })
+    const { data } = await saveAddress(user.id, {
+      street: street.trim(),
+      house: house.trim(),
+      city: 'Актобе',
+      latitude: coordinates?.[1] ?? null,
+      longitude: coordinates?.[0] ?? null,
+    })
     if (data) setAddresses((prev) => [...prev, data])
     setStreet('')
     setHouse('')
+    setCoordinates(null)
     setAdding(false)
   }
 
@@ -55,6 +64,7 @@ export default function Addresses() {
 
       {adding ? (
         <div className="bg-white rounded-card p-4 shadow-warm space-y-3">
+          <MapPicker coordinates={coordinates} onSelect={setCoordinates} />
           <input value={street} onChange={(e) => setStreet(e.target.value)} placeholder={t('checkout.street') as string}
             className="w-full rounded-xl border border-hearth-900/15 px-3 py-2.5 text-sm" />
           <input value={house} onChange={(e) => setHouse(e.target.value)} placeholder={t('checkout.house') as string}

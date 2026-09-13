@@ -43,6 +43,10 @@ npm install
 npm run dev
 ```
 
+For the 2GIS address picker, create `.env.local` from `.env.example` and put
+your 2GIS API key into `VITE_2GIS_API_KEY`. The key is used only in the
+browser to load MapGL and should not be committed to Git.
+
 Open the `http://localhost:5173/` URL printed by Vite. Do not open
 `index.html` directly from File Explorer: `file://` does not support Vite's
 `/src/main.tsx` module path and the browser will block it with a CORS error.

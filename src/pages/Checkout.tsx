@@ -7,6 +7,7 @@ import { formatCurrency } from '../lib/format'
 import type { Lang } from '../lib/types'
 import { getPrimaryBranch, getDeliveryZones, placeOrder } from '../lib/api'
 import EmptyState from '../components/ui/EmptyState'
+import MapPicker from '../components/address/MapPicker'
 
 type PaymentMethod = 'KASPI' | 'CARD' | 'CASH'
 
@@ -27,6 +28,7 @@ export default function Checkout() {
   const [city, setCity] = useState('Актобе')
   const [street, setStreet] = useState('')
   const [house, setHouse] = useState('')
+  const [coordinates, setCoordinates] = useState<[number, number] | null>(null)
   const [apartment, setApartment] = useState('')
   const [entrance, setEntrance] = useState('')
   const [floor, setFloor] = useState('')
@@ -148,6 +150,9 @@ export default function Checkout() {
             )}
             <div className="grid grid-cols-2 gap-3">
               <Field label={t('checkout.city') as string} value={city} onChange={setCity} className="col-span-2" />
+              <div className="col-span-2">
+                <MapPicker coordinates={coordinates} onSelect={setCoordinates} />
+              </div>
               <Field label={t('checkout.street') as string} value={street} onChange={setStreet} className="col-span-2" required />
               <Field label={t('checkout.house') as string} value={house} onChange={setHouse} required />
               <Field label={t('checkout.apartment') as string} value={apartment} onChange={setApartment} />
