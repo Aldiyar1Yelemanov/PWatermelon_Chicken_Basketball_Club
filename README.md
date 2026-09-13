@@ -51,6 +51,16 @@ Open the `http://localhost:5173/` URL printed by Vite. Do not open
 `index.html` directly from File Explorer: `file://` does not support Vite's
 `/src/main.tsx` module path and the browser will block it with a CORS error.
 
+### Automatic public deployment
+
+Every push to `main` automatically deploys the app to GitHub Pages:
+
+`https://aldiyar1yelemanov.github.io/PWatermelon_Chicken_Basketball_Club/`
+
+For the map on the public site, add a repository secret named
+`VITE_2GIS_API_KEY` in **Settings → Secrets and variables → Actions**. The
+workflow passes it into the Vite build automatically.
+
 The Supabase schema and seed files are kept for the later production
 integration, but they are not needed for the MVP.
 
